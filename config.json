@@ -1,0 +1,15 @@
+{
+    "hardware": {
+        "baudrate": 9600,
+        "timeout": 2.0,
+        "target_devices": [
+            {"vid": 9025, "pid": 32823, "name": "Arduino Micro"},
+            {"vid": 7000, "pid": 37382, "name": "SparkFun Pro Micro"},
+            {"vid": 9025, "pid": 55, "name": "Clones/Old Revisions"}
+        ]
+    },
+    "typing_settings": {
+        "error_rate": 0.03,
+        "speed": 100.0
+    }
+}

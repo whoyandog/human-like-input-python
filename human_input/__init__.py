@@ -1,3 +1,4 @@
-from .core import HumanInputPrototype, run_demo
+from .controller import HumanLikeInput
 
-__all__ = ['HumanInputPrototype', 'run_demo']
+__all__ = ['HumanLikeInput']
+
