@@ -1,6 +1,6 @@
 {
     "hardware": {
-        "baudrate": 9600,
+        "baudrate": 115200,
         "timeout": 2.0,
         "target_devices": [
             {"vid": 9025, "pid": 32823, "name": "Arduino Micro"},

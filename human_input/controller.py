@@ -1,12 +1,16 @@
-import random
+import time
 
 from human_input.config import settings
 from human_input import transmitter
+from human_input import humanizer
+from human_input.protocol import HIDCommand as HID
 
 
 class HumanLikeInput:
     def __init__(self):
         self.tx = transmitter.Transmitter(settings)
+        self.humanizer = humanizer.Humanizer()
+        self.history = []
     
     def connect(self):
         self.tx.connect()
@@ -15,13 +19,25 @@ class HumanLikeInput:
         self.tx.disconnect()
     
     def type_text(self, text):
-        for char in text:
-            hold_time = random.uniform(100, 300)  
-            print ("hold time is: " + str(hold_time))
+        for cmd, key in self.humanizer.process_text(text):
+            if cmd == HID.WAIT:
+                time.sleep(key)
+            else: 
+                success = self.tx.send_cmd(cmd, key)
 
-            char_code = ord(char)
-        
-            command = f"{char_code},{hold_time}\n"
-            self.tx.write(command)
+                if success: 
+                    if cmd == HID.KEY_PRESS:
+                        self.history.append(key)
+                
+                else: 
+                    print(f"Символ {chr(key)} не был отправлен!")
+
+        self.tx.send_cmd_no_header(HID.KEY_RELEASE_ALL, 0)
+
+        print("Отправленный текст: " + ''.join(chr(k) for k in self.history))
+
+    
+            
+
     
 

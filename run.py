@@ -3,7 +3,8 @@ from human_input import HumanLikeInput
 # for tests
 import time
 
-text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et"
+# text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et"
+text = "Hello"
 
 def run():
     input_handler = HumanLikeInput()
