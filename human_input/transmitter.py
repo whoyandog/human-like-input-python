@@ -2,7 +2,7 @@ import serial
 import serial.tools.list_ports as list_ports
 import struct
 
-import time
+import time # удалить
 
 from human_input.protocol import HIDCommand as HID
 
@@ -25,15 +25,28 @@ class Transmitter:
             raise ValueError("Atmega port not found")
         
         try:
+
+            start_open = time.perf_counter() # удалить
+
             self.ser = serial.Serial(
                 port, 
                 self.cfg_settings.hardware["baudrate"], 
                 timeout=self.cfg_settings.hardware["timeout"]
             )
 
+            end_open = time.perf_counter() # delete
+            print(f"Порт открыт за: {end_open - start_open:.4f} сек") # delete
+ 
             print("Ожидаю сигнал готовности от устройства...")
 
+
+            start_read = time.perf_counter()
+
             ready_signal = self.ser.read(1)
+
+            end_read = time.perf_counter()
+            delta_read = end_read - start_read
+            print(f"Ответ получен за: {delta_read:.4f} сек")
 
             for byte in ready_signal:
                 print(f"Получен байт: {byte}")
@@ -61,11 +74,17 @@ class Transmitter:
         packet = struct.pack('BBB', HID.HEADER, cmd, key)
 
         try: 
+            start_send = time.perf_counter()
+
             self.ser.reset_input_buffer()
             self.ser.write(packet)
             self.ser.flush()
 
             response = self.ser.read(1)
+
+            end_send = time.perf_counter()
+            delta_read = end_send - start_send
+            print(f"Отправки завершена за: {delta_read:.4f} сек")
 
             if response and response[0] == HID.ACK:
                 print("Команда успешно отправлена и подтверждена!")
@@ -86,11 +105,17 @@ class Transmitter:
         packet = struct.pack('BBB', HID.READY, cmd, key)
 
         try: 
+            start_send = time.perf_counter()
+
             self.ser.reset_input_buffer()
             self.ser.write(packet)
             self.ser.flush()
 
             response = self.ser.read(1)
+
+            end_send = time.perf_counter()
+            delta_read = end_send - start_send
+            print(f"Отправки завершена за: {delta_read:.4f} сек")
 
             if response and response[0] == HID.ACK:
                 print("Команда успешно отправлена и подтверждена!")
@@ -104,5 +129,7 @@ class Transmitter:
             return False
 
     def disconnect(self):
+        print("попытка закрыть порт")
         if self.is_connected():
+            print("закрытие порта")
             self.ser.close()

@@ -18,8 +18,8 @@ class Settings:
 
         self.hardware = \
         {
-            "baudrate": 9600, 
-            "timeout": 2.0, 
+            "baudrate": 115200, 
+            "timeout": 1.0, 
             "target_devices": [ 
                 {"vid": 9025, "pid": 32823 },
                 {"vid": 7000, "pid": 37382 },

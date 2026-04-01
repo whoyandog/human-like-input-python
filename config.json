@@ -1,7 +1,7 @@
 {
     "hardware": {
         "baudrate": 115200,
-        "timeout": 2.0,
+        "timeout": 1.0,
         "target_devices": [
             {"vid": 9025, "pid": 32823, "name": "Arduino Micro"},
             {"vid": 7000, "pid": 37382, "name": "SparkFun Pro Micro"},
