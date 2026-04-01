@@ -43,7 +43,7 @@ class Transmitter:
             else:
                 print("Сигнал не получен")
             
-            self.ser.reset_input_buffer
+            self.ser.reset_input_buffer()
 
         except serial.SerialException as e:
             raise ConnectionError(f"Ошибка подключения к порту {port}: {e}")
