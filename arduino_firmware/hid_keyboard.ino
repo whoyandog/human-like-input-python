@@ -16,8 +16,13 @@ void setup() {
 }
 
 void loop() {
+  if (Serial.available() > 0) {
+     Keyboard.print("0");
+  }
+
   while (Serial.available() > 0 && Serial.peek() != SoF) {
     Serial.read();
+    Keyboard.print("-");
   }
 
   if (Serial.available() >= 3) {
@@ -35,9 +40,6 @@ void loop() {
       executeCommand(cmd, key);
 
       Serial.write(ACK);
-    } else {
-      Serial.read();
-      Keyboard.print("-");
     }
   }
 }

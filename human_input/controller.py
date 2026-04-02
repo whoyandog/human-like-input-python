@@ -19,19 +19,23 @@ class HumanLikeInput:
         self.tx.disconnect()
     
     def type_text(self, text):
-        for cmd, key in self.humanizer.process_text(text):
-            if cmd == HID.WAIT:
-                time.sleep(key)
-            else: 
-                success = self.tx.send_cmd(cmd, key)
+        # Временно закомменировать для теста
+        #  
+        # for cmd, key in self.humanizer.process_text(text):
+        #     if cmd == HID.WAIT:
+        #         time.sleep(key)
+        #     else: 
+        #         success = self.tx.send_cmd(cmd, key)
 
-                if success: 
-                    if cmd == HID.KEY_DOWN:
-                        self.history.append(key)
+        #         if success: 
+        #             if cmd == HID.KEY_DOWN:
+        #                 self.history.append(key)
                 
-                else: 
-                    print(f"Символ {chr(key)} не был отправлен!")
+        #         else: H
+        #             print(f"Символ {chr(key)} не был отправлен!")
 
+        self.tx.send_cmd(HID.KEY_DOWN, ord('h'))
+        self.tx.send_cmd(HID.KEY_UP, ord('h'))
         self.tx.send_cmd_no_header(HID.KEY_RELEASE_ALL, 0)
 
         print("Отправленный текст: " + ''.join(chr(k) for k in self.history))
