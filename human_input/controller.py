@@ -26,13 +26,13 @@ class HumanLikeInput:
                 success = self.tx.send_cmd(cmd, key)
 
                 if success: 
-                    if cmd == HID.KEY_PRESS:
+                    if cmd == HID.KEY_DOWN:
                         self.history.append(key)
                 
                 else: 
                     print(f"Символ {chr(key)} не был отправлен!")
 
-        #self.tx.send_cmd_no_header(HID.KEY_RELEASE_ALL, 0)
+        self.tx.send_cmd_no_header(HID.KEY_RELEASE_ALL, 0)
 
         print("Отправленный текст: " + ''.join(chr(k) for k in self.history))
 

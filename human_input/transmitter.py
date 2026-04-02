@@ -71,12 +71,11 @@ class Transmitter:
             self.connect()
 
         print(f"Отправляю команду: {cmd}, ключ: {key}")
-        packet = struct.pack('BBB', HID.HEADER, cmd, key)
+        packet = struct.pack('BBB', HID.SoF, cmd, key)
 
         try: 
             start_send = time.perf_counter()
 
-            self.ser.reset_input_buffer()
             self.ser.write(packet)
             self.ser.flush()
 
@@ -107,7 +106,6 @@ class Transmitter:
         try: 
             start_send = time.perf_counter()
 
-            self.ser.reset_input_buffer()
             self.ser.write(packet)
             self.ser.flush()
 

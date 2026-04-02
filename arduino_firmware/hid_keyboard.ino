@@ -1,11 +1,11 @@
 #include <Keyboard.h>
 
-#define READY           0x01
-#define HEADER          0x02
-#define CMD_PRESS       0x11
-#define CMD_RELEASE     0x12
-#define CMD_RELEASE_ALL 0x13
+#define SoF             0xAD // start of frame
 #define ACK             0x06 
+#define READY           0x10
+#define CMD_KEY_DOWN    0x21
+#define CMD_KEY_UP      0x22
+#define CMD_RELEASE_ALL 0x23
 
 void setup() {
   Serial.begin(115200);
@@ -16,8 +16,12 @@ void setup() {
 }
 
 void loop() {
+  while (Serial.available() > 0 && Serial.peek() != SoF) {
+    Serial.read();
+  }
+
   if (Serial.available() >= 3) {
-    if (Serial.peek() == HEADER) {
+    if (Serial.peek() == SoF) {
       Serial.read();
       Keyboard.print("+");
       
@@ -40,13 +44,13 @@ void loop() {
 
 void executeCommand(byte cmd, byte key) {
   switch (cmd) {
-    case CMD_PRESS:
+    case CMD_KEY_DOWN:
       Keyboard.print("1");  
 
       Keyboard.press(key);
       break;
       
-    case CMD_RELEASE:
+    case CMD_KEY_UP:
       Keyboard.print("2");
 
       Keyboard.release(key);
