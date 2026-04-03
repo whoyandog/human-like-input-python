@@ -1,67 +1,76 @@
 #include <Keyboard.h>
 
-#define SoF             0xAD // start of frame
-#define ACK             0x06 
+#define SoF             0xAA
+#define ACK             0x06
 #define READY           0x10
 #define CMD_KEY_DOWN    0x21
 #define CMD_KEY_UP      0x22
 #define CMD_RELEASE_ALL 0x23
+#define CMD_PING        0x7E
+
+enum RxState {
+  WAIT_SOF,
+  WAIT_CMD,
+  WAIT_KEY
+};
+
+RxState rxState = WAIT_SOF;
+byte rxCmd = 0;
+byte rxKey = 0;
 
 void setup() {
   Serial.begin(115200);
   Keyboard.begin();
-  
-  while (!Serial);
+  while (!Serial) {}
   Serial.write(READY);
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-     Keyboard.print("0");
-  }
+  while (Serial.available() > 0) {
+    byte b = Serial.read();
 
-  while (Serial.available() > 0 && Serial.peek() != SoF) {
-    Serial.read();
-    Keyboard.print("-");
-  }
+    switch (rxState) {
+      case WAIT_SOF:
+        if (b == SoF) {
+          rxState = WAIT_CMD;
+        } 
+        break;
 
-  if (Serial.available() >= 3) {
-    if (Serial.peek() == SoF) {
-      Serial.read();
-      Keyboard.print("+");
-      
-      byte cmd = Serial.read();  
-      byte key = Serial.read(); 
+      case WAIT_CMD:
+        rxCmd = b;
+        rxState = WAIT_KEY;
+        break;
 
-      if (key == 108) {
-        return;
-      }
+      case WAIT_KEY:
+        rxKey = b;
 
-      executeCommand(cmd, key);
+        executeCommand(rxCmd, rxKey);
+        Serial.write(ACK);
 
-      Serial.write(ACK);
+        rxState = WAIT_SOF;
+        break;
     }
   }
 }
 
 void executeCommand(byte cmd, byte key) {
   switch (cmd) {
-    case CMD_KEY_DOWN:
-      Keyboard.print("1");  
+    case CMD_PING:
+      break;
 
+    case CMD_KEY_DOWN:
       Keyboard.press(key);
       break;
-      
-    case CMD_KEY_UP:
-      Keyboard.print("2");
 
+    case CMD_KEY_UP:
       Keyboard.release(key);
       break;
 
     case CMD_RELEASE_ALL:
-      Keyboard.print("3");
-
       Keyboard.releaseAll();
+      break;
+
+    default:
       break;
   }
 }
