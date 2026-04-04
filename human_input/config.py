@@ -32,7 +32,8 @@ class Settings:
         self.typing_settings = \
         {
             "error_rate": 0.03,
-            "speed": 100.0
+            "speed": 85.0,
+            "layout": "en"
         }
 
         if os.path.exists(path):

@@ -4,7 +4,7 @@ from human_input import HumanLikeInput
 import time
 
 # text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et"
-text = "Hey, how are you, bro?"
+text = "Hello, World! This is a human-like typing"
 
 def run():
     input_handler = HumanLikeInput()

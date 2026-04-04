@@ -11,3 +11,8 @@ class HIDCommand(IntEnum):
     KEY_UP = 0x22
     KEY_RELEASE_ALL = 0x23
 
+
+class HIDKey(IntEnum):
+    LEFT_SHIFT = 0x81
+    BACKSPACE = 0xB2
+

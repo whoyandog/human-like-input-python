@@ -11,7 +11,7 @@ from human_input.protocol import AppCommand as AC
 class HumanLikeInput:
     def __init__(self):
         self.tx = transmitter.Transmitter(settings)
-        self.humanizer = humanizer.Humanizer()
+        self.humanizer = humanizer.Humanizer(settings.typing_settings)
         self.history = []
     
     def connect(self):
@@ -21,6 +21,7 @@ class HumanLikeInput:
         self.tx.disconnect()
     
     def type_text(self, text):
+        sent_commands = 0
         for cmd, key in self.humanizer.process_text(text):
             if cmd == AC.WAIT:
                 time.sleep(key)
@@ -29,12 +30,12 @@ class HumanLikeInput:
 
                 if success: 
                     if cmd == HC.KEY_DOWN:
-                        self.history.append(key)
+                        sent_commands += 1
                 
                 else: 
-                    print(f"Символ {chr(key)} не был отправлен!")
+                    print(f"Команда {int(cmd):#04x} с ключом {int(key):#04x} не была отправлена")
 
-        print("Отправленный текст: " + ''.join(chr(k) for k in self.history))
+        print(f"Завершено: отправлено {sent_commands} нажатий")
 
     
             
