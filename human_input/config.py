@@ -19,7 +19,9 @@ class Settings:
         self.hardware = \
         {
             "baudrate": 115200, 
-            "timeout": 1.0, 
+            "handshake_timeout": 0.05,
+            "handshake_attempts": 5,
+            "command_timeout": 1,
             "target_devices": [ 
                 {"vid": 9025, "pid": 32823 },
                 {"vid": 7000, "pid": 37382 },

@@ -34,35 +34,6 @@ class HumanLikeInput:
                 else: 
                     print(f"Символ {chr(key)} не был отправлен!")
 
-        # def send_command(command, key):
-        #     self.tx.send_cmd(command, key)
-        #     time.sleep(0.2)
-        
-        # def send_custom_command(data):
-        #     self.tx.send_custom_cmd(data)
-        #     time.sleep(0.2)
-
-        # send_command(HC.KEY_DOWN, ord('h'))
-        # send_command(HC.KEY_UP, ord('h'))
-
-        # send_custom_command([HC.SoF, HC.KEY_DOWN, ord('i')])
-        # send_custom_command([HC.SoF, HC.KEY_UP, ord('i')])
-        # send_custom_command([HC.KEY_DOWN, HC.SoF, HC.KEY_DOWN, ord('i')])
-        # send_custom_command([ord('i'), HC.SoF, HC.KEY_UP, ord('i'), HC.KEY_UP, ord('i')])
-
-        # send_custom_command([HC.SoF, ord('i'), HC.KEY_DOWN, ord('h'), ord('i')])
-        # send_custom_command([HC.SoF, HC.KEY_UP, ord('h')])
-
-        #send_custom_command([HC.SoF, HC.SoF, HC.KEY_, ord('i')])
-
-
-        # send_custom_command([HC.KEY_DOWN, ord('h')])
-
-        # send_custom_command([HC.SoF, HC.KEY_DOWN, ord('i')])
-        # send_custom_command([HC.SoF, HC.KEY_UP, ord('i')])
-
-        # send_custom_command([HC.SoF, HC.KEY_RELEASE_ALL, 0x00])
-
         print("Отправленный текст: " + ''.join(chr(k) for k in self.history))
 
     

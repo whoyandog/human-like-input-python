@@ -1,12 +1,13 @@
 #include <Keyboard.h>
 
 #define SoF             0xAA
+#define PING            0x7E
 #define ACK             0x06
-#define READY           0x10
+
 #define CMD_KEY_DOWN    0x21
 #define CMD_KEY_UP      0x22
 #define CMD_RELEASE_ALL 0x23
-#define CMD_PING        0x7E
+
 
 enum RxState {
   WAIT_SOF,
@@ -22,7 +23,7 @@ void setup() {
   Serial.begin(115200);
   Keyboard.begin();
   while (!Serial) {}
-  Serial.write(READY);
+  Serial.write(ACK);
 }
 
 void loop() {
@@ -55,7 +56,7 @@ void loop() {
 
 void executeCommand(byte cmd, byte key) {
   switch (cmd) {
-    case CMD_PING:
+    case PING:
       break;
 
     case CMD_KEY_DOWN:
