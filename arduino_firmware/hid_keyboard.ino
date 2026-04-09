@@ -9,6 +9,7 @@
 #define CMD_RELEASE_ALL 0x23
 
 
+
 enum RxState {
   WAIT_SOF,
   WAIT_CMD,
